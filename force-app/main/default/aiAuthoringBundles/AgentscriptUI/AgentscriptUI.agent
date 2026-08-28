@@ -1,0 +1,67 @@
+# AgentscriptUI — Prototype
+# Goal: prove the chain "question -> agent asks for a 30s security delay + renders a
+# countdown timer LWC (CLT editor) -> user validates -> action returns the full answer".
+
+config:
+    developer_name: "AgentscriptUI"
+    agent_label: "AgentscriptUI"
+    agent_type: "AgentforceEmployeeAgent"
+    description: "Prototype: 30-second security delay with a timer LWC, then a full answer after validation"
+
+variables:
+    validated: mutable boolean = False
+    final_answer: mutable string = ""
+
+system:
+    messages:
+        welcome: "Bonjour, je peux traiter vos demandes de validation sécurisée. Posez votre question."
+        error: "Une erreur est survenue. Merci de réessayer."
+    instructions: "You are a validation assistant. Sensitive operations require a mandatory 30-second security delay before they can be validated."
+
+start_agent agent_router:
+    label: "Agent Router"
+    description: "Route user requests to the validation subagent"
+
+    reasoning:
+        instructions:|
+            Select the tool that best matches the user's message and conversation history. Route validation-related requests, and any ACTION_CONFIRM message, to the validation subagent. If it's unclear, make your best guess.
+        actions:
+            begin_validation: @utils.transition to @subagent.validation
+                description: "Route to validation. Call for any validation request and for ACTION_CONFIRM messages."
+
+subagent validation:
+    label: "Validation"
+    description: "Handles a sensitive operation that requires a 30-second security delay collected via a timer form, then returns the full answer."
+
+    reasoning:
+        instructions: ->
+            if not @variables.validated:
+                | If the message is ACTION_CONFIRM, call {!@actions.complete_validation} with the confirmation data. Do NOT ask for confirmation and do NOT output any text. Otherwise, tell the user in French that a mandatory 30-second security delay is required before they can validate, and call {!@actions.complete_validation} action's user_input tool to display the security-delay timer form. Do NOT output any other text.
+            else:
+                | {!@variables.final_answer}
+
+        actions:
+            complete_validation: @actions.complete_validation
+                with confirmation = ...
+                set @variables.validated = True
+                set @variables.final_answer = @outputs.answer
+
+    actions:
+        complete_validation:
+            description: "Validates a sensitive operation after the mandatory 30-second security delay and returns the full answer."
+            inputs:
+                confirmation: object
+                    description: "Security-delay confirmation collected via the countdown timer form."
+                    label: "confirmation"
+                    is_required: True
+                    is_user_input: True
+                    complex_data_type_name: "c__validationTimer"
+            outputs:
+                answer: string
+                    description: "The full answer to return to the user once validated."
+                    label: "answer"
+                    filter_from_agent: False
+                    is_displayable: False
+            target: "apex://ValidationService"
+            label: "Complete Validation"
+            require_user_confirmation: False

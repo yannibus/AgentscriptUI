@@ -1,0 +1,5 @@
+{
+    "title": "Validation Timer",
+    "description": "Security delay confirmation collected via a countdown timer",
+    "lightning:type": "@apexClassType/c__ValidationService$ValidationInput"
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Prototype: 30-second security delay with a timer LWC, then a full answer after validation</description>
+    <localTopicLinks>
+        <genAiPluginName>agent_router_16jHs000000g4zk</genAiPluginName>
+    </localTopicLinks>
+    <localTopicLinks>
+        <genAiPluginName>validation_16jHs000000g4zk</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>validation_16jHs000000g4zk</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Handles a sensitive operation that requires a 30-second security delay collected via a timer form, then returns the full answer.</description>
+        <developerName>validation_16jHs000000g4zk</developerName>
+        <genAiPluginInstructions>
+            <description>You are a validation assistant. Sensitive operations require a mandatory 30-second security delay before they can be validated.</description>
+            <developerName>instruction0_179Hs000000gTg9</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hs000000gTg9</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>complete_validation_179Hs000000gTg9</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>complete_validation_179Hs000000gTg9</fullName>
+            <description>Validates a sensitive operation after the mandatory 30-second security delay and returns the full answer.</description>
+            <developerName>complete_validation_179Hs000000gTg9</developerName>
+            <invocationTarget>ValidationService</invocationTarget>
+            <invocationTargetType>apex</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>false</isIncludeInProgressIndicator>
+            <localDeveloperName>complete_validation</localDeveloperName>
+            <masterLabel>Complete Validation</masterLabel>
+        </localActions>
+        <localDeveloperName>validation</localDeveloperName>
+        <masterLabel>Validation</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <localTopics>
+        <fullName>agent_router_16jHs000000g4zk</fullName>
+        <canEscalate>false</canEscalate>
+        <description>Route user requests to the validation subagent</description>
+        <developerName>agent_router_16jHs000000g4zk</developerName>
+        <genAiPluginInstructions>
+            <description>You are a validation assistant. Sensitive operations require a mandatory 30-second security delay before they can be validated.</description>
+            <developerName>instruction0_179Hs000000gTg8</developerName>
+            <language>en_US</language>
+            <masterLabel>instruction0_179Hs000000gTg8</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localDeveloperName>agent_router</localDeveloperName>
+        <masterLabel>Agent Router</masterLabel>
+        <pluginType>Topic</pluginType>
+    </localTopics>
+    <masterLabel>AgentscriptUI</masterLabel>
+    <plannerType>Atlas__ConcurrentMultiAgentOrchestration</plannerType>
+</GenAiPlannerBundle>

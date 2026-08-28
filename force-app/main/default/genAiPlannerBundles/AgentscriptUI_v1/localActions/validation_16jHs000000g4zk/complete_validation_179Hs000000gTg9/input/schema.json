@@ -1,0 +1,14 @@
+{
+  "required" : [ "confirmation" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "confirmation" : {
+      "title" : "confirmation",
+      "description" : "Security-delay confirmation collected via the countdown timer form.",
+      "lightning:type" : "c__validationTimer",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

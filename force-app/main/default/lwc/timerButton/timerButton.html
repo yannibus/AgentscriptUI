@@ -1,0 +1,32 @@
+<template>
+    <lightning-card title="Validation sécurisée" icon-name="utility:clock">
+        <div class="slds-var-p-horizontal_medium slds-var-p-bottom_medium">
+            <p class="slds-text-body_regular slds-var-m-bottom_small">
+                Un délai de sécurité de 30&nbsp;secondes est requis avant de
+                valider cette opération.
+            </p>
+
+            <div
+                class="slds-text-heading_medium slds-text-align_center slds-var-m-bottom_x-small"
+                aria-live="polite"
+            >
+                <template lwc:if={isWaiting}>
+                    <span class="slds-text-color_weak">⏳ {countdown}s</span>
+                </template>
+                <template lwc:else>
+                    <span class="slds-text-color_success">✅ Prêt</span>
+                </template>
+            </div>
+
+            <div class="slds-progress-bar slds-progress-bar_circular" role="progressbar">
+                <span class="slds-progress-bar__value" style={progressStyle}></span>
+            </div>
+
+            <p
+                class="slds-text-body_small slds-text-align_center slds-var-m-top_small slds-text-color_weak"
+            >
+                {statusLabel}
+            </p>
+        </div>
+    </lightning-card>
+</template>

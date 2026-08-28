@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>AgentscriptUI Access</label>
+    <description>Grants access to the AgentscriptUI Employee Agent and its ValidationService Apex class.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <agentAccesses>
+        <agentName>AgentscriptUI</agentName>
+        <enabled>true</enabled>
+    </agentAccesses>
+    <classAccesses>
+        <apexClass>ValidationService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+</PermissionSet>
